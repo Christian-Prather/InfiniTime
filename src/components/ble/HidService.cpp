@@ -18,11 +18,11 @@ namespace {
   char* OperationToString(uint8_t op) {
     char* operation;
     switch(op) {
-      case BLE_GATT_ACCESS_OP_READ_CHR: operation = "READ CHR"; break;
-      case BLE_GATT_ACCESS_OP_WRITE_CHR: operation = "WRITE CHR"; break;
-      case BLE_GATT_ACCESS_OP_READ_DSC: operation = "READ DSC"; break;
-      case BLE_GATT_ACCESS_OP_WRITE_DSC: operation = "WRITE DSC"; break;
-      default: operation = "?"; break;
+      case BLE_GATT_ACCESS_OP_READ_CHR: operation = (char*)"READ CHR"; break;
+      case BLE_GATT_ACCESS_OP_WRITE_CHR: operation = (char*)"WRITE CHR"; break;
+      case BLE_GATT_ACCESS_OP_READ_DSC: operation = (char*)"READ DSC"; break;
+      case BLE_GATT_ACCESS_OP_WRITE_DSC: operation = (char*)"WRITE DSC"; break;
+      default: operation = (char*)"?"; break;
     }
     return operation;
   }
@@ -260,40 +260,40 @@ void HidService::Init() {
 
 int
 HidService::OnHidServiceRequested(uint16_t connectionHandle, uint16_t attributeHandle, ble_gatt_access_ctxt *context) {
-  char* operation = ::OperationToString(context->op);
+  // char* operation = ::OperationToString(context->op);
 
   int res = 0;
-  char* attribute;
+  // char* attribute;
   if(attributeHandle == protocolModeHandle) {
-    attribute = "protocolModeHandle";
+    // attribute = (char*)"protocolModeHandle";
     static uint8_t protcoleModeValue = 1;
     res = os_mbuf_append(context->om, &protcoleModeValue, 1);
   } else if(attributeHandle == reportKeyboardHandle) {
-    attribute = "reportHandle";
+    // attribute = (char*)"reportHandle";
   } else if(attributeHandle == reportMapHandle) {
-    attribute = "reportMapHandle";
+    // attribute = (char*)"reportMapHandle";
     res = os_mbuf_append(context->om, &report_map_data, sizeof(report_map_data));
   }
   else if(attributeHandle == informationHandle) {
-    attribute = "informationHandle";
+    // attribute = (char*)"informationHandle";
     static uint32_t infoValue = 0x01110002;
     res = os_mbuf_append(context->om, &infoValue, 4);
 
   }
   else if(attributeHandle == controlPointHandle) {
-    attribute = "controlPointHandle";
+    // attribute = (char*)"controlPointHandle";
   }
   else {
-    attribute = "???";
+    // attribute = (char*)"???";
   }
 
-  NRF_LOG_INFO("HID : Attribute = %d = %s, operation = %s",attributeHandle,  attribute, operation);
+  //NRF_LOG_INFO("HID : Attribute = %d = %s, operation = %s",attributeHandle,  attribute, operation);
   return res;
 }
 
 int HidService::OnReportDescriptorRequested(uint16_t connectionHandle, uint16_t attributeHandle,
                                             ble_gatt_access_ctxt *context) {
-  NRF_LOG_INFO("HID : Attribute = %d = Callback report descriptor, operation = %s",attributeHandle, ::OperationToString(context->op));
+  //NRF_LOG_INFO("HID : Attribute = %d = Callback report descriptor, operation = %s",attributeHandle, ::OperationToString(context->op));
   int res = 0;
   static uint16_t reportValue = 0x0101;
 
@@ -303,7 +303,7 @@ int HidService::OnReportDescriptorRequested(uint16_t connectionHandle, uint16_t 
 
 int HidService::OnReportDescriptorMouseRequested(uint16_t connectionHandle, uint16_t attributeHandle,
                                             ble_gatt_access_ctxt *context) {
-  NRF_LOG_INFO("HID : Attribute = %d = Callback report descriptor Mouse, operation = %s",attributeHandle, ::OperationToString(context->op));
+  //NRF_LOG_INFO("HID : Attribute = %d = Callback report descriptor Mouse, operation = %s",attributeHandle, ::OperationToString(context->op));
   int res = 0;
   static uint16_t reportValue = 0x0102;
 
@@ -313,7 +313,7 @@ int HidService::OnReportDescriptorMouseRequested(uint16_t connectionHandle, uint
 
 int HidService::OnReportMapDescriptorRequested(uint16_t connectionHandle, uint16_t attributeHandle,
                                                ble_gatt_access_ctxt *context) {
-  NRF_LOG_INFO("HID : Attribute = %d = Callback report map descriptor, operation = %s",attributeHandle, ::OperationToString(context->op));
+  //NRF_LOG_INFO("HID : Attribute = %d = Callback report map descriptor, operation = %s",attributeHandle, ::OperationToString(context->op));
   int res = 0;
   static uint16_t externalReportValue = 0x0036;
 
@@ -352,7 +352,7 @@ void HidService::Test() {
     ble_gattc_notify_custom(1, reportKeyboardHandle, om);
     testIndex++;
     push = false;
-    NRF_LOG_INFO("PUSH %d %d", helloWorld[testIndex], modif);
+    //NRF_LOG_INFO("PUSH %d %d", helloWorld[testIndex], modif);
   } else {
     static uint8_t buf[9]{0, 0x0, 0x00, 0, 0x00, 0x00, 0x00, 0x00, 0x00};
     auto *om = ble_hs_mbuf_from_flat(&buf, 9);
@@ -363,7 +363,7 @@ void HidService::Test() {
       return;
     }
     ble_gattc_notify_custom(1, reportKeyboardHandle, om);
-    NRF_LOG_INFO("Release");
+    //NRF_LOG_INFO("Release");
     push = true;
   }
 
@@ -382,7 +382,7 @@ void HidService::Test() {
     ble_gattc_notify_custom(1, reportMouseHandle, om);
     testIndex++;
     push = false;
-    NRF_LOG_INFO("UNPUSH");
+    //NRF_LOG_INFO("UNPUSH");
   } else {
     uint8_t buf[3]{0, 0, 2};
     auto *om = ble_hs_mbuf_from_flat(&buf, 3);
@@ -395,7 +395,7 @@ void HidService::Test() {
     ble_gattc_notify_custom(1, reportMouseHandle, om);
     testIndex++;
     push = false;
-    NRF_LOG_INFO("PUSH");
+    //NRF_LOG_INFO("PUSH");
   }
 #endif
 }
@@ -410,6 +410,6 @@ void HidService::SendMoveReport(uint8_t x, uint8_t y) {
     return;
   }
   ble_gattc_notify_custom(1, reportMouseHandle, om);
-  NRF_LOG_INFO("move");
+  //NRF_LOG_INFO("move");
 }
 

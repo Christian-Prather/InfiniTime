@@ -15,6 +15,7 @@
 #include "components/timer/TimerController.h"
 #include "components/alarm/AlarmController.h"
 #include "touchhandler/TouchHandler.h"
+#include "components/ble/BleMouse.h"
 
 #include "displayapp/Messages.h"
 #include "BootErrors.h"
@@ -65,6 +66,7 @@ namespace Pinetime {
                  Pinetime::Controllers::AlarmController& alarmController,
                  Pinetime::Controllers::BrightnessController& brightnessController,
                  Pinetime::Controllers::TouchHandler& touchHandler,
+                 Pinetime::Controllers::BleMouse& bleMouse,
                  Pinetime::Controllers::FS& filesystem);
       void Start(System::BootErrors error);
       void PushMessage(Display::Messages msg);

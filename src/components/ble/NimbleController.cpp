@@ -49,8 +49,8 @@ NimbleController::NimbleController(Pinetime::System::SystemTask& systemTask,
     heartRateService {*this, heartRateController},
     motionService {*this, motionController},
     fsService {systemTask, fs},
-    hidService{},
-    serviceDiscovery({&currentTimeClient, &alertNotificationClient}) {
+    serviceDiscovery({&currentTimeClient, &alertNotificationClient}),
+    hidService {} {
 }
 
 void nimble_on_reset(int reason) {
@@ -507,3 +507,6 @@ void NimbleController::RestoreBond() {
   }
 }
 
+void NimbleController::Test() {
+  hidService.Test();
+}

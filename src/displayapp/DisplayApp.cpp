@@ -69,13 +69,13 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
                        Pinetime::Controllers::NotificationManager& notificationManager,
                        Pinetime::Controllers::HeartRateController& heartRateController,
                        Controllers::Settings& settingsController,
-                       Pinetime::Controllers::BleMouse& bleMouse,
                        Pinetime::Controllers::MotorController& motorController,
                        Pinetime::Controllers::MotionController& motionController,
                        Pinetime::Controllers::TimerController& timerController,
                        Pinetime::Controllers::AlarmController& alarmController,
                        Pinetime::Controllers::BrightnessController& brightnessController,
                        Pinetime::Controllers::TouchHandler& touchHandler,
+                       Pinetime::Controllers::BleMouse& bleMouse,
                        Pinetime::Controllers::FS& filesystem)
   : lcd {lcd},
     touchPanel {touchPanel},
@@ -93,7 +93,7 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
     brightnessController {brightnessController},
     touchHandler {touchHandler},
     filesystem {filesystem},
-    bleMouse{bleMouse},
+    bleMouse {bleMouse},
     lvgl {lcd, filesystem} {
 }
 
@@ -517,7 +517,7 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
       currentScreen = std::make_unique<Screens::Twos>();
       break;
     case Apps::Paint:
-      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController,bleMouse);
+      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController, bleMouse);
       break;
     case Apps::Paddle:
       currentScreen = std::make_unique<Screens::Paddle>(lvgl);

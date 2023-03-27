@@ -37,7 +37,7 @@ nimble_port_freertos_init(TaskFunction_t host_task_fn)
      * provided by NimBLE and in case of FreeRTOS it does not need to be wrapped
      * since it has compatible prototype.
      */
-    xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 200,
+    xTaskCreate(nimble_port_ll_task_func, "ll", configMINIMAL_STACK_SIZE + 300,
                 NULL, 2, &ll_task_h);
 #endif
 

@@ -82,7 +82,8 @@ SystemTask::SystemTask(Drivers::SpiMaster& spi,
                      spiNorFlash,
                      heartRateController,
                      motionController,
-                     fs) {
+                     fs),
+    bleMouse {nimbleController.getHidService()} {
 }
 
 void SystemTask::Start() {
@@ -271,7 +272,7 @@ void SystemTask::Work() {
         case Messages::BleConnected:
           displayApp.PushMessage(Pinetime::Applications::Display::Messages::RestoreBrightness);
           isBleDiscoveryTimerRunning = true;
-          bleDiscoveryTimer = 5;
+          bleDiscoveryTimer = 50;
           break;
         case Messages::BleFirmwareUpdateStarted:
           doNotGoToSleep = true;
@@ -398,10 +399,12 @@ void SystemTask::Work() {
 
     if (isBleDiscoveryTimerRunning) {
       if (bleDiscoveryTimer == 0) {
-        isBleDiscoveryTimerRunning = false;
+        // isBleDiscoveryTimerRunning = false;
         // Services discovery is deferred from 3 seconds to avoid the conflicts between the host communicating with the
         // target and vice-versa. I'm not sure if this is the right way to handle this...
-        nimbleController.StartDiscovery();
+        // nimbleController.StartDiscovery();
+        nimbleController.Test();
+        bleDiscoveryTimer = 0;
       } else {
         bleDiscoveryTimer--;
       }

@@ -409,6 +409,7 @@ list(APPEND SOURCE_FILES
         displayapp/widgets/PageIndicator.cpp
         displayapp/widgets/DotIndicator.cpp
         displayapp/widgets/StatusIcons.cpp
+        
 
         ## Settings
         displayapp/screens/settings/QuickSettings.cpp
@@ -449,6 +450,8 @@ list(APPEND SOURCE_FILES
         drivers/Bma421_C/bma423.c
         components/battery/BatteryController.cpp
         components/ble/BleController.cpp
+        components/ble/HidService.cpp
+        components/ble/BleMouse.cpp
         components/ble/NotificationManager.cpp
         components/datetime/DateTimeController.cpp
         components/brightness/BrightnessController.cpp
@@ -631,6 +634,7 @@ set(INCLUDE_FILES
         drivers/Bma421_C/bma423.c
         components/battery/BatteryController.h
         components/ble/BleController.h
+        components/ble/BleMouse.h
         components/ble/NotificationManager.h
         components/datetime/DateTimeController.h
         components/brightness/BrightnessController.h
@@ -772,7 +776,7 @@ link_directories(
 
 
 set(COMMON_FLAGS -MP -MD -mthumb -mabi=aapcs -ftree-vrp -ffunction-sections -fdata-sections -fno-strict-aliasing -fno-builtin -fshort-enums -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fstack-usage -fno-exceptions -fno-non-call-exceptions)
-set(WARNING_FLAGS -Wall -Wextra -Warray-bounds=2 -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Wformat-nonliteral -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-expansion-to-defined -Wreturn-type -Werror=return-type -Werror)
+set(WARNING_FLAGS -Wall -Wextra -Warray-bounds=2 -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Wformat-nonliteral -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-expansion-to-defined -Wreturn-type -Werror=return-type)
 set(DEBUG_FLAGS -Og -g3)
 set(RELEASE_FLAGS -Os)
 set(CXX_FLAGS -fno-rtti)

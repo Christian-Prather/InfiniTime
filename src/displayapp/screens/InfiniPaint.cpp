@@ -7,8 +7,10 @@
 
 using namespace Pinetime::Applications::Screens;
 
-InfiniPaint::InfiniPaint(Pinetime::Components::LittleVgl& lvgl, Pinetime::Controllers::MotorController& motor)
-  : lvgl {lvgl}, motor {motor} {
+InfiniPaint::InfiniPaint(Pinetime::Components::LittleVgl& lvgl,
+                         Pinetime::Controllers::MotorController& motor,
+                         Controllers::BleMouse& bleMouse)
+  : lvgl {lvgl}, motor {motor}, bleMouse {bleMouse} {
   std::fill(b, b + bufferSize, selectColor);
 }
 
@@ -68,5 +70,18 @@ bool InfiniPaint::OnTouchEvent(uint16_t x, uint16_t y) {
   area.y2 = y + (height / 2) - 1;
   lvgl.SetFullRefresh(Components::LittleVgl::FullRefreshDirections::None);
   lvgl.FlushDisplay(&area, b);
+
+  // if (!moving) {
+  //   moving = true;
+  //   lastX = x;
+  //   lastY = y;
+
+  // } else {
+
+  bleMouse.Move((x - lastX) * 2, (y - lastY) * 2);
+  lastX = x;
+  lastY = y;
+  // }
+  timeout = 20;
   return true;
 }

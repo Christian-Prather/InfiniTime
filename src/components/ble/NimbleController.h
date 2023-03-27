@@ -56,6 +56,8 @@ namespace Pinetime {
       int OnGAPEvent(ble_gap_event* event);
       void StartDiscovery();
 
+      void Test();
+
       Pinetime::Controllers::MusicService& music() {
         return musicService;
       };
