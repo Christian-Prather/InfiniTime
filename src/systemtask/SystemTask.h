@@ -17,8 +17,9 @@
 #include "components/ble/NotificationManager.h"
 #include "components/timer/TimerController.h"
 #include "components/alarm/AlarmController.h"
+#include "components/motor/MotorController.h"
 #include "components/fs/FS.h"
-#include "components/ble/BleMouse.h"
+// #include "components/ble/BleMouse.h"
 #include "touchhandler/TouchHandler.h"
 #include "buttonhandler/ButtonHandler.h"
 #include "buttonhandler/ButtonActions.h"
@@ -71,11 +72,13 @@ namespace Pinetime {
                  Pinetime::Drivers::Bma421& motionSensor,
                  Controllers::Settings& settingsController,
                  Pinetime::Controllers::HeartRateController& heartRateController,
-                 Pinetime::Applications::DisplayApp& displayApp,
                  Pinetime::Applications::HeartRateTask& heartRateApp,
                  Pinetime::Controllers::FS& fs,
                  Pinetime::Controllers::TouchHandler& touchHandler,
-                 Pinetime::Controllers::ButtonHandler& buttonHandler);
+                 Pinetime::Controllers::ButtonHandler& buttonHandler,
+                 Drivers::St7789& lcd,
+                 Pinetime::Controllers::MotorController& motorController,
+                 Pinetime::Controllers::BrightnessController& brightnessController);
 
       void Start();
       void PushMessage(Messages msg);
@@ -119,7 +122,7 @@ namespace Pinetime {
       Pinetime::Controllers::HeartRateController& heartRateController;
       Pinetime::Controllers::MotionController& motionController;
 
-      Pinetime::Applications::DisplayApp& displayApp;
+      Pinetime::Applications::DisplayApp displayApp;
       Pinetime::Applications::HeartRateTask& heartRateApp;
       Pinetime::Controllers::FS& fs;
       Pinetime::Controllers::TouchHandler& touchHandler;

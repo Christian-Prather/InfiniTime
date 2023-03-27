@@ -91,7 +91,6 @@ TimerHandle_t debounceTimer;
 TimerHandle_t debounceChargeTimer;
 Pinetime::Controllers::Battery batteryController;
 Pinetime::Controllers::Ble bleController;
-Pinetime::Controllers::HidService hidService;
 
 Pinetime::Controllers::HeartRateController heartRateController;
 Pinetime::Applications::HeartRateTask heartRateApp(heartRateSensor, heartRateController);
@@ -106,28 +105,27 @@ Pinetime::Controllers::NotificationManager notificationManager;
 Pinetime::Controllers::MotionController motionController;
 Pinetime::Controllers::TimerController timerController;
 Pinetime::Controllers::AlarmController alarmController {dateTimeController};
-Pinetime::Controllers::BleMouse bleMouse {hidService};
 Pinetime::Controllers::TouchHandler touchHandler;
 Pinetime::Controllers::ButtonHandler buttonHandler;
 Pinetime::Controllers::BrightnessController brightnessController {};
 
-Pinetime::Applications::DisplayApp displayApp(lcd,
-                                              touchPanel,
-                                              batteryController,
-                                              bleController,
-                                              dateTimeController,
-                                              watchdog,
-                                              notificationManager,
-                                              heartRateController,
-                                              settingsController,
-                                              motorController,
-                                              motionController,
-                                              timerController,
-                                              alarmController,
-                                              brightnessController,
-                                              touchHandler,
-                                              bleMouse,
-                                              fs);
+// Pinetime::Applications::DisplayApp displayApp(lcd,
+//                                               touchPanel,
+//                                               batteryController,
+//                                               bleController,
+//                                               dateTimeController,
+//                                               watchdog,
+//                                               notificationManager,
+//                                               heartRateController,
+//                                               settingsController,
+//                                               motorController,
+//                                               motionController,
+//                                               timerController,
+//                                               alarmController,
+//                                               brightnessController,
+//                                               touchHandler,
+//                                               bleMouse,
+//                                               fs);
 
 Pinetime::System::SystemTask systemTask(spi,
                                         spiNorFlash,
@@ -145,11 +143,13 @@ Pinetime::System::SystemTask systemTask(spi,
                                         motionSensor,
                                         settingsController,
                                         heartRateController,
-                                        displayApp,
                                         heartRateApp,
                                         fs,
                                         touchHandler,
-                                        buttonHandler);
+                                        buttonHandler,
+                                        lcd,
+                                        motorController,
+                                        brightnessController);
 
 /* Variable Declarations for variables in noinit SRAM
    Increment NoInit_MagicValue upon adding variables to this area
