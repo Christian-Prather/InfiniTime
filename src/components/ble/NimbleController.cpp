@@ -49,6 +49,7 @@ NimbleController::NimbleController(Pinetime::System::SystemTask& systemTask,
     heartRateService {*this, heartRateController},
     motionService {*this, motionController},
     fsService {systemTask, fs},
+    hidService{},
     serviceDiscovery({&currentTimeClient, &alertNotificationClient}) {
 }
 
@@ -98,6 +99,7 @@ void NimbleController::Init() {
   heartRateService.Init();
   motionService.Init();
   fsService.Init();
+  hidService.Init();
 
   int rc;
   rc = ble_hs_util_ensure_addr(0);
@@ -161,7 +163,15 @@ void NimbleController::StartAdvertising() {
   fields.uuids128 = &dfuServiceUuid;
   fields.num_uuids128 = 1;
   fields.uuids128_is_complete = 1;
+
+  fields.uuids16 = &hidServiceUuid;
+  fields.num_uuids16 = 1;
+  fields.uuids16_is_complete = 1;
+
   fields.tx_pwr_lvl = BLE_HS_ADV_TX_PWR_LVL_AUTO;
+
+  fields.appearance = 962;
+  fields.appearance_is_present = 1;
 
   rsp_fields.name = reinterpret_cast<const uint8_t*>(deviceName);
   rsp_fields.name_len = strlen(deviceName);
@@ -206,6 +216,7 @@ int NimbleController::OnGAPEvent(ble_gap_event* event) {
         bleController.Connect();
         systemTask.PushMessage(Pinetime::System::Messages::BleConnected);
         // Service discovery is deferred via systemtask
+        ble_gap_security_initiate(connectionHandle);
       }
       break;
 
@@ -495,3 +506,4 @@ void NimbleController::RestoreBond() {
     fs.FileDelete("/bond.dat");
   }
 }
+

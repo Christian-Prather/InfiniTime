@@ -93,6 +93,7 @@ namespace Pinetime {
       Pinetime::Controllers::BrightnessController& brightnessController;
       Pinetime::Controllers::TouchHandler& touchHandler;
       Pinetime::Controllers::FS& filesystem;
+      Pinetime::Controllers::BleMouse& bleMouse;
 
       Pinetime::Controllers::FirmwareValidator validator;
       Pinetime::Components::LittleVgl lvgl;

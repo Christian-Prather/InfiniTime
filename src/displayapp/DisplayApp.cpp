@@ -10,6 +10,7 @@
 #include "components/ble/NotificationManager.h"
 #include "components/motion/MotionController.h"
 #include "components/motor/MotorController.h"
+#include "components/ble/BleMouse.h"
 #include "displayapp/screens/ApplicationList.h"
 #include "displayapp/screens/Clock.h"
 #include "displayapp/screens/FirmwareUpdate.h"
@@ -68,6 +69,7 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
                        Pinetime::Controllers::NotificationManager& notificationManager,
                        Pinetime::Controllers::HeartRateController& heartRateController,
                        Controllers::Settings& settingsController,
+                       Pinetime::Controllers::BleMouse& bleMouse,
                        Pinetime::Controllers::MotorController& motorController,
                        Pinetime::Controllers::MotionController& motionController,
                        Pinetime::Controllers::TimerController& timerController,
@@ -91,6 +93,7 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
     brightnessController {brightnessController},
     touchHandler {touchHandler},
     filesystem {filesystem},
+    bleMouse{bleMouse},
     lvgl {lcd, filesystem} {
 }
 
@@ -514,7 +517,7 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
       currentScreen = std::make_unique<Screens::Twos>();
       break;
     case Apps::Paint:
-      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController);
+      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController,bleMouse);
       break;
     case Apps::Paddle:
       currentScreen = std::make_unique<Screens::Paddle>(lvgl);

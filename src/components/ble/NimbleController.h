@@ -23,6 +23,7 @@
 #include "components/ble/MotionService.h"
 #include "components/ble/weather/WeatherService.h"
 #include "components/fs/FS.h"
+#include "components/ble/HidService.h"
 
 namespace Pinetime {
   namespace Drivers {
@@ -71,6 +72,10 @@ namespace Pinetime {
         return weatherService;
       };
 
+      Pinetime::Controllers::HidService& getHidService() {
+        return hidService;
+      }
+
       uint16_t connHandle();
       void NotifyBatteryLevel(uint8_t level);
 
@@ -107,6 +112,7 @@ namespace Pinetime {
       MotionService motionService;
       FSService fsService;
       ServiceDiscovery serviceDiscovery;
+      HidService hidService;
 
       uint8_t addrType;
       uint16_t connectionHandle = BLE_HS_CONN_HANDLE_NONE;
@@ -116,6 +122,8 @@ namespace Pinetime {
       ble_uuid128_t dfuServiceUuid {
         .u {.type = BLE_UUID_TYPE_128},
         .value = {0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15, 0xDE, 0xEF, 0x12, 0x12, 0x30, 0x15, 0x00, 0x00}};
+
+      ble_uuid16_t hidServiceUuid {.u {.type = BLE_UUID_TYPE_16}, .value = 0x1812};
     };
 
     static NimbleController* nptr;
