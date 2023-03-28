@@ -85,7 +85,7 @@ SystemTask::SystemTask(Drivers::SpiMaster& spi,
                      heartRateController,
                      motionController,
                      fs),
-    bleMouse {nimbleController.getHidService()},
+    bleJoystick {nimbleController.getHidService()},
     displayApp {lcd,
                 touchPanel,
                 batteryController,
@@ -101,7 +101,7 @@ SystemTask::SystemTask(Drivers::SpiMaster& spi,
                 alarmController,
                 brightnessController,
                 touchHandler,
-                bleMouse,
+                bleJoystick,
                 fs} {
 }
 

@@ -452,6 +452,7 @@ list(APPEND SOURCE_FILES
         components/ble/BleController.cpp
         components/ble/HidService.cpp
         components/ble/BleMouse.cpp
+        components/ble/BleJoystick.cpp
         components/ble/NotificationManager.cpp
         components/datetime/DateTimeController.cpp
         components/brightness/BrightnessController.cpp
@@ -635,6 +636,7 @@ set(INCLUDE_FILES
         components/battery/BatteryController.h
         components/ble/BleController.h
         components/ble/BleMouse.h
+        components/ble/BleJoystick.h
         components/ble/NotificationManager.h
         components/datetime/DateTimeController.h
         components/brightness/BrightnessController.h

@@ -10,7 +10,7 @@
 #include "components/ble/NotificationManager.h"
 #include "components/motion/MotionController.h"
 #include "components/motor/MotorController.h"
-#include "components/ble/BleMouse.h"
+// #include "components/ble/BleMouse.h"
 #include "displayapp/screens/ApplicationList.h"
 #include "displayapp/screens/Clock.h"
 #include "displayapp/screens/FirmwareUpdate.h"
@@ -75,7 +75,7 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
                        Pinetime::Controllers::AlarmController& alarmController,
                        Pinetime::Controllers::BrightnessController& brightnessController,
                        Pinetime::Controllers::TouchHandler& touchHandler,
-                       Pinetime::Controllers::BleMouse& bleMouse,
+                       Pinetime::Controllers::BleJoystick& bleJoystick,
                        Pinetime::Controllers::FS& filesystem)
   : lcd {lcd},
     touchPanel {touchPanel},
@@ -93,7 +93,7 @@ DisplayApp::DisplayApp(Drivers::St7789& lcd,
     brightnessController {brightnessController},
     touchHandler {touchHandler},
     filesystem {filesystem},
-    bleMouse {bleMouse},
+    bleJoystick {bleJoystick},
     lvgl {lcd, filesystem} {
 }
 
@@ -517,7 +517,7 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
       currentScreen = std::make_unique<Screens::Twos>();
       break;
     case Apps::Paint:
-      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController, bleMouse);
+      currentScreen = std::make_unique<Screens::InfiniPaint>(lvgl, motorController, bleJoystick);
       break;
     case Apps::Paddle:
       currentScreen = std::make_unique<Screens::Paddle>(lvgl);

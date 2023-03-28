@@ -5,7 +5,8 @@
 #include <algorithm> // std::fill
 #include "displayapp/screens/Screen.h"
 #include "components/motor/MotorController.h"
-#include "components/ble/BleMouse.h"
+// #include "components/ble/BleMouse.h"
+#include "components/ble/BleJoystick.h"
 
 namespace Pinetime {
   namespace Components {
@@ -17,7 +18,7 @@ namespace Pinetime {
 
       class InfiniPaint : public Screen {
       public:
-        InfiniPaint(Pinetime::Components::LittleVgl& lvgl, Controllers::MotorController& motor, Controllers::BleMouse& bleMouse);
+        InfiniPaint(Pinetime::Components::LittleVgl& lvgl, Controllers::MotorController& motor, Controllers::BleJoystick& bleJoystick);
 
         ~InfiniPaint() override;
 
@@ -35,7 +36,7 @@ namespace Pinetime {
         lv_color_t selectColor = LV_COLOR_WHITE;
         uint8_t color = 2;
 
-        Controllers::BleMouse& bleMouse;
+        Controllers::BleJoystick& bleJoystick;
 
         bool moving = false;
         uint8_t lastX;
