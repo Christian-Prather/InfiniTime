@@ -26,11 +26,22 @@ Joystick::Joystick(Pinetime::Components::LittleVgl& lvgl) : lvgl {lvgl} {
   lv_obj_set_size(joystick, joystickSize, joystickSize);
 
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
+  // Create a one-shot timer
+  one_shot_timer = xTimerCreate("One-shot timer",    // Name of timer
+                                touch_delay,           // Period of timer (in ticks)
+                                pdFALSE,             // Auto-reload
+                                (void*) 0,           // Timer ID
+                                timeout); // Callback function
 }
 
 Joystick::~Joystick() {
   lv_task_del(taskRefresh);
   lv_obj_clean(lv_scr_act());
+}
+
+void Joystick::timeout() {
+  dx = homeX;
+  dy = homeY;
 }
 
 void Joystick::Refresh() {
@@ -46,15 +57,17 @@ void Joystick::Refresh() {
 }
 
 bool Joystick::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
-  if (event == TouchEvents::None) {
-    notTouching = true;
-  } else {
-    notTouching = false;
-  }
+  //   if (event == TouchEvents::None) {
+  //     notTouching = true;
+  //   } else {
+  //     notTouching = false;
+  //   }
   return true;
 }
 
 bool Joystick::OnTouchEvent(uint16_t x, uint16_t y) {
+
+  xTimerStart(one_shot_timer, portMAX_DELAY);
 
   dx = x;
   dy = y;

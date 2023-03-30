@@ -3,6 +3,7 @@
 #include <lvgl/lvgl.h>
 #include <cstdint>
 #include "displayapp/screens/Screen.h"
+#include <timers.h>
 
 namespace Pinetime {
   namespace Components {
@@ -21,6 +22,7 @@ namespace Pinetime {
 
         bool OnTouchEvent(TouchEvents event) override;
         bool OnTouchEvent(uint16_t x, uint16_t y) override;
+        void timeout();
 
       private:
         Pinetime::Components::LittleVgl& lvgl;
@@ -32,12 +34,16 @@ namespace Pinetime {
         int16_t homeY = (LV_VER_RES - joystickSize) / 2;
 
         int8_t dx = 0; // Position the ball should be at
-        int8_t dy = 0; 
+        int8_t dy = 0;
 
         lv_obj_t* joystick;
         lv_obj_t* background;
 
         lv_task_t* taskRefresh;
+
+        static TimerHandle_t one_shot_timer;
+        static const TickType_t touch_delay = 5000 / portTICK_PERIOD_MS;
+
       };
     }
   }
