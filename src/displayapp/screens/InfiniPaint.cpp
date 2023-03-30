@@ -85,7 +85,16 @@ bool InfiniPaint::OnTouchEvent(uint16_t x, uint16_t y) {
 
   // } else {
 
-  bleJoystick.Move((x - lastX) * 2, (y - lastY) * 2);
+  uint8_t fb = (x - lastX) * 2;
+  uint8_t lr = (y - lastY) * 2;
+  if (fb > 200) {
+    fb = 200;
+  }
+  if (lr > 200) {
+    lr = 200l;
+  }
+  bleJoystick.Move(fb, lr);
+
   lastX = x;
   lastY = y;
   // }
