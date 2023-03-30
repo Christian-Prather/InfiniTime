@@ -48,7 +48,8 @@ namespace Pinetime {
           {Symbols::music, Apps::Music},
 
           {Symbols::paintbrush, Apps::Paint},
-          {Symbols::paddle, Apps::Paddle},
+          // {Symbols::paddle, Apps::Paddle},
+          {Symbols::play, Apps::Joystick},
           {"2", Apps::Twos},
           {Symbols::drum, Apps::Metronome},
           {Symbols::map, Apps::Navigation},

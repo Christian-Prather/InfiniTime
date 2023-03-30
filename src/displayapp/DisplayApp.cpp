@@ -17,6 +17,7 @@
 #include "displayapp/screens/FirmwareValidation.h"
 #include "displayapp/screens/InfiniPaint.h"
 #include "displayapp/screens/Paddle.h"
+#include "displayapp/screens/Joystick.h"
 #include "displayapp/screens/StopWatch.h"
 #include "displayapp/screens/Metronome.h"
 #include "displayapp/screens/Music.h"
@@ -521,6 +522,9 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
       break;
     case Apps::Paddle:
       currentScreen = std::make_unique<Screens::Paddle>(lvgl);
+      break;
+    case Apps::Joystick:
+      currentScreen = std::make_unique<Screens::Joystick>(lvgl);
       break;
     case Apps::Music:
       currentScreen = std::make_unique<Screens::Music>(systemTask->nimble().music());
