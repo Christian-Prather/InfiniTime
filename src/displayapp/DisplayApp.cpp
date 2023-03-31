@@ -524,7 +524,7 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
       currentScreen = std::make_unique<Screens::Paddle>(lvgl);
       break;
     case Apps::Joystick:
-      currentScreen = std::make_unique<Screens::Joystick>(lvgl);
+      currentScreen = std::make_unique<Screens::Joystick>(lvgl, bleJoystick);
       break;
     case Apps::Music:
       currentScreen = std::make_unique<Screens::Music>(systemTask->nimble().music());
