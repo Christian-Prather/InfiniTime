@@ -91,7 +91,7 @@ bool InfiniPaint::OnTouchEvent(uint16_t x, uint16_t y) {
     fb = 200;
   }
   if (lr > 200) {
-    lr = 200l;
+    lr = 200;
   }
   bleJoystick.Move(fb, lr);
 

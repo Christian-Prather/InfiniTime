@@ -44,15 +44,15 @@ namespace Pinetime {
           {Symbols::clock, Apps::Alarm},
           {Symbols::hourGlass, Apps::Timer},
           {Symbols::shoe, Apps::Steps},
-          {Symbols::heartBeat, Apps::HeartRate},
-          {Symbols::music, Apps::Music},
+          // {Symbols::heartBeat, Apps::HeartRate},
+          // {Symbols::music, Apps::Music},
 
           {Symbols::paintbrush, Apps::Paint},
           // {Symbols::paddle, Apps::Paddle},
           {Symbols::play, Apps::Joystick},
           {"2", Apps::Twos},
           {Symbols::drum, Apps::Metronome},
-          {Symbols::map, Apps::Navigation},
+          // {Symbols::map, Apps::Navigation},
           {Symbols::none, Apps::None},
 
           // {"M", Apps::Motion},

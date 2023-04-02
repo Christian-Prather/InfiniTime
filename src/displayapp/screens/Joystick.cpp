@@ -25,6 +25,11 @@ Joystick::Joystick(Pinetime::Components::LittleVgl& lvgl, Controllers::BleJoysti
   lv_obj_set_style_local_radius(joystick, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_RADIUS_CIRCLE);
   lv_obj_set_size(joystick, joystickSize, joystickSize);
 
+  joystickBack = lv_obj_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_bg_color(joystickBack, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_AQUA);
+  lv_obj_set_style_local_radius(joystickBack, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_RADIUS_CIRCLE);
+  lv_obj_set_size(joystickBack, joystickSize * 2, joystickSize * 2);
+
   taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
   // Create a one-shot timer
   // one_shot_timer = xTimerCreate("One-shot timer", // Name of timer
@@ -39,27 +44,10 @@ Joystick::~Joystick() {
   lv_obj_clean(lv_scr_act());
 }
 
-// void Joystick::zeroJS() {
-//   dx = homeX;
-//   dy = homeY;
-// }
-
-// void Joystick::timeout(TimerHandle_t /*xTimer*/) {
-//   // zeroJS();
-//   dx = homeX;
-//   dy = homeY;
-// }
-
 void Joystick::Refresh() {
   // Get current position of the finger to put the joystick there
-
-  //   joystickX += dx;
-  //   joystickY += dy;
-  // if (notTouching) {
-  // lv_obj_set_pos(joystick, homeX, homeY);
-  // } else {
   lv_obj_set_pos(joystick, homeX, homeY);
-  // }
+  lv_obj_set_pos(joystickBack, homeX, homeY);
 }
 
 bool Joystick::OnTouchEvent(Pinetime::Applications::TouchEvents /*event*/) {
@@ -68,21 +56,14 @@ bool Joystick::OnTouchEvent(Pinetime::Applications::TouchEvents /*event*/) {
 
 bool Joystick::OnTouchEvent(uint16_t x, uint16_t y) {
 
-  // xTimerStart(one_shot_timer, portMAX_DELAY);
   lv_obj_set_pos(joystick, x, y);
-  bleJoystick.Move(x, y);
+  if (x > 200) {
+    x = 200;
+  }
+  if (y > 200) {
+    y = 200;
+  }
+  bleJoystick.Move(x, -y);
 
-  // dx = x;
-  // dy = y;
-  // sets the center paddle pos. (30px offset) with the the y_coordinate of the finger
-  // but clamp it such that the paddle never clips off screen
-  //   if (y < 31) {
-  //     lv_obj_set_pos(paddle, 0, 1);
-  //   } else if (y > LV_VER_RES - 31) {
-  //     lv_obj_set_pos(paddle, 0, LV_VER_RES - 61);
-  //   } else {
-  //     lv_obj_set_pos(paddle, 0, y - 30);
-  //   }
-  //   paddlePos = y;
   return true;
 }

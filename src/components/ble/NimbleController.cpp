@@ -89,16 +89,16 @@ void NimbleController::Init() {
   deviceInformationService.Init();
   currentTimeClient.Init();
   currentTimeService.Init();
-  musicService.Init();
-  weatherService.Init();
-  navService.Init();
+  // musicService.Init();
+  // weatherService.Init();
+  // navService.Init();
   anService.Init();
   dfuService.Init();
   batteryInformationService.Init();
-  immediateAlertService.Init();
-  heartRateService.Init();
-  motionService.Init();
-  fsService.Init();
+  // immediateAlertService.Init();
+  // heartRateService.Init();
+  // motionService.Init();
+  // fsService.Init();
   hidService.Init();
 
   int rc;
@@ -133,7 +133,7 @@ void NimbleController::Init() {
   rc = ble_gatts_start();
   ASSERT(rc == 0);
 
-  RestoreBond();
+  // RestoreBond();
 
   StartAdvertising();
 }

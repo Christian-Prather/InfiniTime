@@ -41,7 +41,9 @@ namespace Pinetime {
         int8_t dx = 0; // Position the ball should be at
         int8_t dy = 0;
 
-        lv_obj_t* joystick;
+        lv_obj_t* joystick;        
+        lv_obj_t* joystickBack;
+
         lv_obj_t* background;
 
         lv_task_t* taskRefresh;
